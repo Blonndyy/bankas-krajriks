@@ -7,6 +7,7 @@ logs['bg']='orange'
 label_font = ("Arial",15)
 #konts ar bilanci
 #melns negeris
+#melns baltādainais
 nauda=10000
 bilance=Label(logs, 
          text="Bilnace:",
