@@ -6,7 +6,7 @@ logs.geometry("1000x800")
 logs['bg']='orange'
 label_font = ("Arial",15)
 #konts ar bilanci
-
+#melns negeris
 nauda=10000
 bilance=Label(logs, 
          text="Bilnace:",
