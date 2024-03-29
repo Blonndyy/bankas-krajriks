@@ -8,6 +8,7 @@ label_font = ("Arial",15)
 #konts ar bilanci
 #melns negeris
 #melns baltādainais
+#123
 print("hallo")
 print("fff")
 print("hallo")
