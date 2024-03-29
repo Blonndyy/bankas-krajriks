@@ -9,7 +9,7 @@ label_font = ("Arial",15)
 #melns negeris
 #melns baltādainais
 print("hallo")
-print("")
+print("fff")
 nauda=10000
 bilance=Label(logs, 
          text="Bilnace:",
