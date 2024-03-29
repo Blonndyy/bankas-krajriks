@@ -9,6 +9,7 @@ label_font = ("Arial",15)
 #melns negeris
 #melns baltādainais
 #123
+#123
 print("hallo")
 print("fff")
 print("hallo")
