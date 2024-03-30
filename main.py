@@ -67,12 +67,15 @@ krajkonta_label.place(x=200, y=10)
 def krajkonta_bilance():
     global change
     global krajkonts
+    global nauda
     user_input=prod_sum.get()
     if user_input:
         try:
             change = get_change(user_input)
             changes=float(change)
             krajkonts +=changes
+            nauda -=changes
+            naudas_text.set("{:.2f}".format(nauda))
             krajkonta_text.set("{:.2f}".format(krajkonts))
            
         except ValueError as e:
