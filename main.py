@@ -1,5 +1,6 @@
 from tkinter import *
 from change_func import *
+
 #galvenais logs
 logs=Tk()
 logs.geometry("1000x800")
@@ -83,12 +84,37 @@ def krajkonta_bilance():
     else:
         print("Error: Input is empty")
 
+
+#pievoienoju vienreizējās iemaksas funkciju un entry   
+         
+vienrsum=Entry(logs)
+vienrsum.place(x=200,
+               y=55,
+               width=50
+               )     
+def one_off_payment():
+    global krajkonts, nauda
+    user_input_one_off = vienrsum.get()
+    if  user_input_one_off:
+        try:
+            one_off = float(user_input_one_off)
+            krajkonts +=one_off
+            nauda -=one_off
+            naudas_text.set("{:.2f}".format(nauda))
+            krajkonta_text.set("{:.2f}".format(krajkonts))
+           
+        except ValueError as e:
+            print("Error:", e)
+    else:
+        print("Error: Input is empty")
+
 #uzpsiežot save and use pogu, viss uz ekrana mainīsies tāka tas notiktu, kad kaut ko 
 #nopērk un aktivizējas krājrīks.      
 def galvenais_cikls():
     update_bilance()
     krajkonta_bilance()
-            
+    one_off_payment()
+
 save_button = Button(logs, 
                      text="Save and Use", 
                      command=galvenais_cikls,
