@@ -7,8 +7,31 @@ logs.geometry("1000x800")
 logs['bg']='orange'
 label_font = ("Arial",15) 
 
+#popup logs
+import tkinter as tk
+def no():
+        popup.destroy()
+        logs.destroy()
+def open_popup():
+    global popup
+    popup = Toplevel(logs)
+    logs['bg']='orange'
+    popup.geometry("200x100")
+    popup.title("Popup Window")
+    popup.grab_set()  # Prevent interaction with the main window
+    popup.transient(logs)  # Set the main window as the transient master
+    
+    # Add content to the popup window
+    popup_teksts = Label(popup, text="Vai tu vēlies uzsākt krājkontu?")
+    popup_teksts.pack(pady=10)
 
-
+    yes_button = tk.Button(popup, text="Yes", command=popup.destroy)
+    yes_button.place(x=20, y=50)
+    
+    no_button = tk.Button(popup, text="no", command=no)
+    no_button.place(x=80, y=50)
+    
+    
 #konts ar bilanci
 bilance=Label(logs, 
          text="Bilnace:",
@@ -123,4 +146,5 @@ save_button = Button(logs,
 
 save_button.place(x=30, y= 100)
 
+open_popup()
 logs.mainloop()
