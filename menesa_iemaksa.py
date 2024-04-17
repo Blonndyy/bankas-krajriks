@@ -1,7 +1,7 @@
 import time
 nauda = 100
 krajkonts = 0
-vienrsum = 10
+vienrsum = 2
 def monthly_payment():
     global krajkonts, nauda, vienrsum
     user_input_one_off = vienrsum
