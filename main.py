@@ -11,17 +11,25 @@ def center_window(window, width, height):
 
     window.geometry(f"{width}x{height}+{x_coordinate}+{y_coordinate}")
 
+
+krajriks_popup_check=False
+
 def close_krajriks_widgets():
     krajriks_frame.place_forget()
    
 
 def show_krajriks_widgets():
-    open_popup()
+    if not krajriks_popup_check:
+        open_popup()
+    else:
+        show_krajriks_frame()
 
 def no():
     popup.destroy()
 
 def yes():
+    global krajriks_popup_check
+    krajriks_popup_check=True
     popup.destroy()
     show_krajriks_frame()
 
@@ -30,6 +38,7 @@ def open_popup():
     popup = Toplevel(logs)
     popup.title("Popup Window")
     popup.grab_set()
+    
 
     # Calculate the position of the popup relative to the main window (logs)
     logs.update_idletasks()
@@ -69,7 +78,6 @@ label.place(x=120, y=40)
 krajriks_frame = Frame(logs, width=1000, height=800, bg="orange")
 krajriks_label = Label(krajriks_frame, text="krajkonts", bg='orange', font=("Arial", 15))
 krajriks_label.place(x=500,y=10)
-krajriks_frame.place(x=0, y=0, relwidth=1, relheight=1)
 
 #krajkonts
 krajkonts=0
@@ -79,13 +87,14 @@ krajkonta_nauda = Label(krajriks_frame, textvariable=krajkonta_text, font=label_
 krajkonta_nauda.place(x=800, y=20)
 
 # pogas lai tiktu no konta uz krajkontu
+krajriks_button = Button(logs, text="Krajriks",activebackground='darkorange',
+                     bg='orange', command=show_krajriks_widgets)
+krajriks_button.place(x=500, y=400)
 basic_button = Button(krajriks_frame, text="back",activebackground='darkorange',
                      bg='orange', command=close_krajriks_widgets)
 basic_button.place(x=400, y=400)
 
-krajriks_button = Button(logs, text="Krajriks",activebackground='darkorange',
-                     bg='orange', command=show_krajriks_widgets)
-krajriks_button.place(x=500, y=400)
+
 
 # ievades priekš krajrika testēšnaas
 test=Label(krajriks_frame, text='testēšana priekš krājkonta', bg='orange')
