@@ -74,6 +74,15 @@ naudas_text = StringVar(value="{:.2f}".format(nauda))
 label = Label(logs, textvariable=naudas_text, font=("Arial", 15), bg="orange")
 label.place(x=120, y=40)
 
+#poga nestrāda kārtīgi tāpec būs šādi.
+
+button_frame=Frame(logs, bg='orange')
+
+button_frame.place(x=0, y=500, relwidth=1, height=50)
+krajriks_button = Button(button_frame, text="Krajriks",activebackground='darkorange',
+                     bg='orange', command=show_krajriks_widgets)
+krajriks_button.place(x=500, y=0)
+
 # krajrika widget
 krajriks_frame = Frame(logs, width=1000, height=800, bg="orange")
 krajriks_label = Label(krajriks_frame, text="krajkonts", bg='orange', font=("Arial", 15))
@@ -87,9 +96,7 @@ krajkonta_nauda = Label(krajriks_frame, textvariable=krajkonta_text, font=label_
 krajkonta_nauda.place(x=800, y=20)
 
 # pogas lai tiktu no konta uz krajkontu
-krajriks_button = Button(logs, text="Krajriks",activebackground='darkorange',
-                     bg='orange', command=show_krajriks_widgets)
-krajriks_button.place(x=500, y=400)
+
 basic_button = Button(krajriks_frame, text="back",activebackground='darkorange',
                      bg='orange', command=close_krajriks_widgets)
 basic_button.place(x=400, y=400)
