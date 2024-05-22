@@ -64,9 +64,6 @@ class KrajriksApp:
         self.basic_button = ttk.Button(self.krajriks_frame, style='TButton', text="Back", command=self.close_krajriks_widgets)
         self.basic_button.place(relx=0.90, rely=0.02)
         
-        
-        
-        
         self.test_label = ttk.Label(self.krajriks_frame, text='Testēšana priekš krājkonta')
         self.test_label.place(relx=0.3, rely=0.15)
         
@@ -87,12 +84,13 @@ class KrajriksApp:
         
         self.save_button = ttk.Button(self.krajriks_frame, text="Start", command=self.galvenais_cikls)
         self.save_button.place(relx=0.5, rely=0.4)
+        
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         
-        self.pazinojumu_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
-        self.pazinojumu_button.place(relx=0.05, rely=0.10)
+        self.merka_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
+        self.merka_button.place(relx=0.05, rely=0.10)
         
-    def pazinojumi(self):
+    def pazinojumi(self):#mērķa noteikšanai un mērķa sasniegšanas paziņojums
         self.pazinojumi_frame = ttk.Frame(root)
         self.pazinojumi_frame = ttk.Entry(self.krajriks_frame)
         self.pazinojumi_frame.grid(row=7, column=1, padx=20, pady=10)
