@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk, messagebox
 from change_func import get_change
 import time
+from datetime import datetime
 class KrajriksApp:
     def __init__(self, root):
         self.root = root
@@ -55,40 +56,59 @@ class KrajriksApp:
         self.krajriks_frame = ttk.Frame(borderwidth=2, relief="solid")
         self.krajriks_frame.pack_propagate()
         self.krajriks_label = ttk.Label(self.krajriks_frame, text="Krajkonts:", style='Header.TLabel')
-        self.krajriks_label.place(relx=0.05, rely=0.05)
+        self.krajriks_label.place(relx=0.45, rely=0.05)
         
         self.krajkonta_text = StringVar(value="{:.2f}".format(self.krajkonts))
         self.krajkonta_nauda = ttk.Label(self.krajriks_frame, textvariable=self.krajkonta_text, style='Header.TLabel')
-        self.krajkonta_nauda.place(relx=0.2, rely=0.053)
+        self.krajkonta_nauda.place(relx=0.60, rely=0.053)
         
         self.basic_button = ttk.Button(self.krajriks_frame, style='TButton', text="Back", command=self.close_krajriks_widgets)
-        self.basic_button.place(relx=0.90, rely=0.02)
+        self.basic_button.place(relx=0.85, rely=0.02)
         
         self.test_label = ttk.Label(self.krajriks_frame, text='Testēšana priekš krājkonta')
-        self.test_label.place(relx=0.3, rely=0.15)
+        self.test_label.place(relx=0.3, rely=0.35)
         
         self.produkta_summa_label = ttk.Label(self.krajriks_frame, text='Produkta summa, testēšanai.')
-        self.produkta_summa_label.place(relx=0.3, rely=0.20)
+        self.produkta_summa_label.place(relx=0.3, rely=0.40)
         
         self.prod_sum = ttk.Entry(self.krajriks_frame)
-        self.prod_sum.place(relx=0.6, rely=0.20)
+        self.prod_sum.place(relx=0.6, rely=0.40)
         
-        self.vienreizeja_iemaksa_label = ttk.Label(self.krajriks_frame, text='Vienreizējās iemaksas testēšanai')
-        self.vienreizeja_iemaksa_label.place(relx=0.3, rely=0.25)
+        # self.vienreizeja_iemaksa_label = ttk.Label(self.krajriks_frame, text='Vienreizējās iemaksas testēšanai')
+        # self.vienreizeja_iemaksa_label.place(relx=0.3, rely=0.45)
         
-        self.vienrsum = ttk.Entry(self.krajriks_frame)
-        self.vienrsum.place(relx=0.6, rely=0.25)
+        self.vienreizeja_iemaksa_button=ttk.Button(self.krajriks_frame, text='Papildināt', command=self.open_papildinat)
+        self.vienreizeja_iemaksa_button.place(relx=0.45)
+        # self.vienrsum = ttk.Entry(self.krajriks_frame)
+        # self.vienrsum.place(relx=0.6, rely=0.45)
         
         self.save_button = ttk.Label(self.krajriks_frame, text="šo pogu tiks testēts vai darbojas krajkonta funkcionalitāte", wraplength=300)
-        self.save_button.place(relx=0.3, rely=0.35)
+        self.save_button.place(relx=0.3, rely=0.55)
         
         self.save_button = ttk.Button(self.krajriks_frame, text="Start", command=self.galvenais_cikls)
-        self.save_button.place(relx=0.5, rely=0.4)
+        self.save_button.place(relx=0.5, rely=0.6)
+        
+        #mēneša iemaksa
+        
+        self.menesa_iemaksa_label=ttk.Button(self.krajriks_frame, text='dads')
         
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         
         self.merka_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
-        self.merka_button.place(relx=0.05, rely=0.10)
+        self.merka_button.place(relx=0.5, rely=0.10)
+        
+        
+    def open_papildinat(self):
+        self.papildinat = Toplevel(self.root)
+        self.papildinat.title("Papildinat")
+        self.papildinat.grab_set()
+        self.papildinat.configure(background="darkorange")
+        self.root.update_idletasks()
+        x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
+        y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
+        self.pazinojumi.geometry(f"400x200+{x}+{y}")   
+        
+        
         
     def pazinojumi(self):#mērķa noteikšanai un mērķa sasniegšanas paziņojums
         self.pazinojumi = Toplevel(self.root)
@@ -99,6 +119,8 @@ class KrajriksApp:
         x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
         self.pazinojumi.geometry(f"400x200+{x}+{y}")
+        
+        
     
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
@@ -111,6 +133,7 @@ class KrajriksApp:
         
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'kraj savu naudu')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
+<<<<<<< Updated upstream
 
     def merka_noteiksana(self):
         global krajkonts
@@ -129,13 +152,21 @@ class KrajriksApp:
             self.merka_noteiksana.geometry(f"400x200+{x}+{y}")
         else:
             pass
+=======
+     
+       
+             
+>>>>>>> Stashed changes
         
     def menesa_iemaksa(self):
         global krajkonts, nauda
+        if datetime.now().day==5:
+            d
+            
+            
+            
         
     def open_popup(self):
-        
-        
         
         self.popup = Toplevel(self.root)
         self.popup.title("Popup Window")
@@ -144,7 +175,7 @@ class KrajriksApp:
         self.root.update_idletasks()
         x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
-        self.popup.geometry(f"300x200+{x}+{y}")
+        self.popup.geometry(f"400x200+{x}+{y}")
         
         popup_text = ttk.Label(self.popup,background='darkorange', text="Vai tu vēlies uzsākt krājkontu?")
         popup_text.pack(pady=10)
