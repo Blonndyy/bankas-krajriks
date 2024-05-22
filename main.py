@@ -53,8 +53,8 @@ class KrajriksApp:
         self.style.configure('TFrame', background='orange')
         
         self.krajriks_frame = ttk.Frame(self.root)
-        self.krajriks_frame.pack_propagate(0)
-        self.krajriks_frame.config(width=600, height=600)
+        self.krajriks_frame.pack_propagate()
+        self.krajriks_frame.config(width=1000, height=800)
         self.krajriks_label = ttk.Label(self.krajriks_frame, text="Krajkonts", style='Header.TLabel')
         self.krajriks_label.grid(row=0, column=0, padx=20, pady=20, sticky='w')
         
@@ -83,32 +83,34 @@ class KrajriksApp:
         self.vienrsum = ttk.Entry(self.krajriks_frame)
         self.vienrsum.grid(row=4, column=1, padx=20, pady=10)
         
-        self.save_button_explanation = ttk.Label(self.krajriks_frame, text="šo pogu tiks testēts vai darbojas krajkonta funkcionalitāte", wraplength=300)
-        self.save_button_explanation.grid(row=5, column=0, columnspan=2, padx=20, pady=10)
+        self.save_button = ttk.Label(self.krajriks_frame, text="šo pogu tiks testēts vai darbojas krajkonta funkcionalitāte", wraplength=300)
+        self.save_button.grid(row=5, column=0, columnspan=2, padx=20, pady=10)
         
         self.save_button = ttk.Button(self.krajriks_frame, text="Start", command=self.galvenais_cikls)
         self.save_button.grid(row=6, column=0, columnspan=2, pady=20)
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         
+        self.pazinojumu_button = ttk.Button(self.krajriks_frame, text="Paziņojumi", command=self.paziņojumi)
+        self.pazinojumu_button.grid(row=7, column=0, columnspan=2, padx=20, pady=10)
         
+    def paziņojumi():
+       pazinojumi_frame = ttk.Frame(root)
+       
     
     def open_popup(self):
-        self.style = ttk.Style()
-        self.style.configure('TButton',background='orange', font=('Arial', 12), padding=10)
-        self.style.configure('TLabel',background='orange', font=('Arial', 12))
-        self.style.configure('Header.TLabel',background='orange', font=('Arial', 15, 'bold'))
-        self.style.configure('TFrame', background='orange')
+        
+        
         
         self.popup = Toplevel(self.root)
         self.popup.title("Popup Window")
         self.popup.grab_set()
-        
+        self.popup.configure(background="darkorange")
         self.root.update_idletasks()
         x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
         self.popup.geometry(f"300x200+{x}+{y}")
         
-        popup_text = ttk.Label(self.popup, text="Vai tu vēlies uzsākt krājkontu?")
+        popup_text = ttk.Label(self.popup,background='darkorange', text="Vai tu vēlies uzsākt krājkontu?")
         popup_text.pack(pady=10)
         
         yes_button = ttk.Button(self.popup, text="Yes", command=self.yes)
