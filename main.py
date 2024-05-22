@@ -92,42 +92,18 @@ class KrajriksApp:
         self.pazinojumu_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
         self.pazinojumu_button.place(relx=0.05, rely=0.10)
         
-<<<<<<< HEAD
-        #mēneša iemaksa
-        self.menesa_iemaksa_button = ttk.Button(self.krajriks_frame, text='')
-        
     def pazinojumi(self):
-        self.pazinojumi = Toplevel(self.root)
-        self.pazinojumi.title("pazinojumi")
-        self.pazinojumi.grab_set()
-        self.pazinojumi.configure(background="darkorange")
-        self.root.update_idletasks()
-        x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
-        y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
-        self.pazinojumi.geometry(f"400x200+{x}+{y}")
-    
+        self.pazinojumi_frame = ttk.Frame(root)
+        self.pazinojumi_frame = ttk.Entry(self.krajriks_frame)
+        self.pazinojumi_frame.grid(row=7, column=1, padx=20, pady=10)
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
-=======
-def paziņojumi(self):
-     self.pazinojumi_frame = ttk.Frame(root)
-     self.pazinojumi_frame = ttk.Entry(self.krajriks_frame)
-     self.pazinojumi_frame.grid(row=7, column=1, padx=20, pady=10)
-     self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
-     self.pazinojumi_text.place(relx=0.2, rely=0.2)
          
->>>>>>> e0364b7ca0f9e0fb963be9c41048bff7ed2af719
         
     def menesa_iemaksa(self):
         global krajkonts, nauda
         
-<<<<<<< HEAD
-    
-        
     def open_popup(self):
-=======
-def open_popup(self):
->>>>>>> e0364b7ca0f9e0fb963be9c41048bff7ed2af719
         
         
         
@@ -149,27 +125,27 @@ def open_popup(self):
         no_button = ttk.Button(self.popup, text="No", command=self.no)
         no_button.place(x=150, y=50)
     
-def no(self):
+    def no(self):
         self.popup.destroy()
     
-def yes(self):
+    def yes(self):
         self.krajriks_popup_check = True
         self.popup.destroy()
         self.show_krajriks_frame()
     
-def show_krajriks_widgets(self):
+    def show_krajriks_widgets(self):
         if not self.krajriks_popup_check:
             self.open_popup()
         else:
             self.show_krajriks_frame()
     
-def show_krajriks_frame(self):
-     self.krajriks_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+    def show_krajriks_frame(self):
+        self.krajriks_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
     
-def close_krajriks_widgets(self):
+    def close_krajriks_widgets(self):
         self.krajriks_frame.place_forget()
     
-def update_bilance(self):
+    def update_bilance(self):
         user_input = self.prod_sum.get()
         if user_input:
             try:
@@ -183,7 +159,7 @@ def update_bilance(self):
                 messagebox.showerror("Error", str(e))
 
     
-def krajkonta_bilance(self):
+    def krajkonta_bilance(self):
         user_input = self.prod_sum.get()
         if user_input:
             try:
@@ -200,7 +176,7 @@ def krajkonta_bilance(self):
                 messagebox.showerror("Error", str(e))
 
     
-def one_off_payment(self):
+    def one_off_payment(self):
         user_input_one_off = self.vienrsum.get()
         if user_input_one_off:
             try:
@@ -216,13 +192,13 @@ def one_off_payment(self):
                 messagebox.showerror("Error", str(e))
 
 
-def galvenais_cikls(self):
+    def galvenais_cikls(self):
         self.update_bilance()
         self.krajkonta_bilance()
         self.one_off_payment()
 
 if __name__ == "__main__":
-    root = Tk()
-    app = KrajriksApp(root)
-    root.mainloop()
+        root = Tk()
+        app = KrajriksApp(root)
+        root.mainloop()
     
