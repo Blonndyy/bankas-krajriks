@@ -92,7 +92,7 @@ class KrajriksApp:
         
     def pazinojumi(self):#mērķa noteikšanai un mērķa sasniegšanas paziņojums
         self.pazinojumi_frame = ttk.Frame(root)
-        self.pazinojumi_frame = ttk.Entry(self.krajriks_frame)
+        self.pazinojumi_frame = ttk.Entry(self.pazinojumi)
         self.pazinojumi_frame.grid(row=7, column=1, padx=20, pady=10)
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
