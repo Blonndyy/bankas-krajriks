@@ -91,9 +91,21 @@ class KrajriksApp:
         self.merka_button.place(relx=0.05, rely=0.10)
         
     def pazinojumi(self):#mērķa noteikšanai un mērķa sasniegšanas paziņojums
-        self.pazinojumi_frame = ttk.Frame(root)
-        self.pazinojumi_frame = ttk.Entry(self.pazinojumi)
-        self.pazinojumi_frame.grid(row=7, column=1, padx=20, pady=10)
+        self.pazinojumi = Toplevel(self.root)
+        self.pazinojumi.title("pazinojumi")
+        self.pazinojumi.grab_set()
+        self.pazinojumi.configure(background="darkorange")
+        self.root.update_idletasks()
+        x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
+        y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
+        self.pazinojumi.geometry(f"400x200+{x}+{y}")
+    
+        self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
+        self.pazinojumi_text.place(relx=0.2, rely=0.2)
+        
+        self.pazinojumi_entry = ttk.Entry(self.pazinojumi)
+        self.pazinojumi_entry.place(relx=0.1, rely=0.1)
+        
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
          
