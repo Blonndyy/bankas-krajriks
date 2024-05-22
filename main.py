@@ -105,10 +105,30 @@ class KrajriksApp:
         
         self.pazinojumi_entry = ttk.Entry(self.pazinojumi)
         self.pazinojumi_entry.place(relx=0.1, rely=0.1)
+
+        self.pazinojumi_button = ttk.Button(self.pazinojumi, text="Apstiprināt", command=self.merka_noteiksana)
+        self.pazinojumi_button.place(relx=0.5, rely=0.1)
         
-        self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
+        self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'kraj savu naudu')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
-         
+
+    def merka_noteiksana(self):
+        global krajkonts
+        self.pazinojumi.destroy() 
+        merkis = self.pazinojumi_entry.get()
+        amount2 = float(merkis)
+        print(amount2)
+        if self.krajkonts >= amount2 :
+            self.merka_noteiksana = Toplevel(self.root)
+            self.merka_noteiksana.title(" MĒRĶIS?")
+            self.merka_noteiksana.grab_set()
+            self.merka_noteiksana.configure(background="darkorange")
+            self.root.update_idletasks()
+            x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
+            y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
+            self.merka_noteiksana.geometry(f"400x200+{x}+{y}")
+        else:
+            pass
         
     def menesa_iemaksa(self):
         global krajkonts, nauda
@@ -206,6 +226,7 @@ class KrajriksApp:
         self.update_bilance()
         self.krajkonta_bilance()
         self.one_off_payment()
+        self.merka_noteiksana()
 
 if __name__ == "__main__":
         root = Tk()
