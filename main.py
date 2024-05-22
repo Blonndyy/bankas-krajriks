@@ -33,14 +33,14 @@ class KrajriksApp:
     
     def create_main_widgets(self):
         self.bilance_label = ttk.Label(self.root, text="Bilance:", style='Header.TLabel', background='orange')
-        self.bilance_label.grid(row=0, column=0, padx=20, pady=20, sticky='w')
+        self.bilance_label.place(relx=0.05, rely=0.05)
         
         self.naudas_text = StringVar(value="{:.2f}".format(self.nauda))
         self.label = ttk.Label(self.root, textvariable=self.naudas_text, background="orange", )
-        self.label.grid(row=0, column=1, padx=20, pady=20, sticky='w')
+        self.label.place(relx=0.15, rely=0.055)
         
         self.button_frame = ttk.Frame(self.root)
-        self.button_frame.grid(row=1, column=0, columnspan=2, pady=20)
+        self.button_frame.place(relx=0.1, rely=0.15)
         
         self.krajriks_button = ttk.Button(self.button_frame, text="Krajriks",  command=self.show_krajriks_widgets)
         self.krajriks_button.pack(pady=10)
@@ -52,51 +52,61 @@ class KrajriksApp:
         self.style.configure('Header.TLabel',background='orange', font=('Arial', 15, 'bold'))
         self.style.configure('TFrame', background='orange')
         
-        self.krajriks_frame = ttk.Frame(self.root)
+        self.krajriks_frame = ttk.Frame(borderwidth=2, relief="solid")
         self.krajriks_frame.pack_propagate()
-        self.krajriks_frame.config(width=1000, height=800)
-        self.krajriks_label = ttk.Label(self.krajriks_frame, text="Krajkonts", style='Header.TLabel')
-        self.krajriks_label.grid(row=0, column=0, padx=20, pady=20, sticky='w')
+        self.krajriks_label = ttk.Label(self.krajriks_frame, text="Krajkonts:", style='Header.TLabel')
+        self.krajriks_label.place(relx=0.05, rely=0.05)
         
         self.krajkonta_text = StringVar(value="{:.2f}".format(self.krajkonts))
         self.krajkonta_nauda = ttk.Label(self.krajriks_frame, textvariable=self.krajkonta_text, style='Header.TLabel')
-        self.krajkonta_nauda.grid(row=0, column=1, padx=20, pady=20, sticky='w')
+        self.krajkonta_nauda.place(relx=0.2, rely=0.053)
         
         self.basic_button = ttk.Button(self.krajriks_frame, style='TButton', text="Back", command=self.close_krajriks_widgets)
-        self.basic_button.grid(row=1, column=0, columnspan=2, pady=20)
+        self.basic_button.place(relx=0.85, rely=0.05)
         
         
-        row_offset = 1
+        
         
         self.test_label = ttk.Label(self.krajriks_frame, text='Testēšana priekš krājkonta')
-        self.test_label.grid(row=2, column=0, padx=20, pady=10, sticky='w')
+        self.test_label.place(relx=0.3, rely=0.15)
         
         self.produkta_summa_label = ttk.Label(self.krajriks_frame, text='Produkta summa, testēšanai.')
-        self.produkta_summa_label.grid(row=3, column=0, padx=20, pady=10, sticky='w')
+        self.produkta_summa_label.place(relx=0.3, rely=0.20)
         
         self.prod_sum = ttk.Entry(self.krajriks_frame)
-        self.prod_sum.grid(row=3, column=1, padx=20, pady=10)
+        self.prod_sum.place(relx=0.6, rely=0.20)
         
         self.vienreizeja_iemaksa_label = ttk.Label(self.krajriks_frame, text='Vienreizējās iemaksas testēšanai')
-        self.vienreizeja_iemaksa_label.grid(row=4, column=0, padx=20, pady=10, sticky='w')
+        self.vienreizeja_iemaksa_label.place(relx=0.3, rely=0.25)
         
         self.vienrsum = ttk.Entry(self.krajriks_frame)
-        self.vienrsum.grid(row=4, column=1, padx=20, pady=10)
+        self.vienrsum.place(relx=0.6, rely=0.25)
         
         self.save_button = ttk.Label(self.krajriks_frame, text="šo pogu tiks testēts vai darbojas krajkonta funkcionalitāte", wraplength=300)
-        self.save_button.grid(row=5, column=0, columnspan=2, padx=20, pady=10)
+        self.save_button.place(relx=0.3, rely=0.35)
         
         self.save_button = ttk.Button(self.krajriks_frame, text="Start", command=self.galvenais_cikls)
-        self.save_button.grid(row=6, column=0, columnspan=2, pady=20)
+        self.save_button.place(relx=0.5, rely=0.4)
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         
         self.pazinojumu_button = ttk.Button(self.krajriks_frame, text="Paziņojumi", command=self.paziņojumi)
-        self.pazinojumu_button.grid(row=7, column=0, columnspan=2, padx=20, pady=10)
+        self.pazinojumu_button.place(relx=0.5, rely=0.8)
         
-    def paziņojumi():
-       pazinojumi_frame = ttk.Frame(root)
-       
+    def paziņojumi(self):
+        self.pazinojumi = Toplevel(self.root)
+        self.pazinojumi.title("pazinojumi")
+        self.pazinojumi.grab_set()
+        self.pazinojumi.configure(background="darkorange")
+        self.root.update_idletasks()
+        x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
+        y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
+        self.pazinojumi.geometry(f"400x200+{x}+{y}")
     
+        self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
+        self.pazinojumi_text.place(relx=0.2, rely=0.2)
+        
+        
+        
     def open_popup(self):
         
         
@@ -134,7 +144,7 @@ class KrajriksApp:
             self.show_krajriks_frame()
     
     def show_krajriks_frame(self):
-        self.krajriks_frame.place(relx=0.5, rely=0.5, anchor='center')
+        self.krajriks_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
     
     def close_krajriks_widgets(self):
         self.krajriks_frame.place_forget()
@@ -195,6 +205,4 @@ if __name__ == "__main__":
     root = Tk()
     app = KrajriksApp(root)
     root.mainloop()
-from tkinter import *
-from change_func import *
-import tkinter as tk
+    
