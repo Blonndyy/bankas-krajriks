@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from change_func import get_change
-
+import time
 class KrajriksApp:
     def __init__(self, root):
         self.root = root
@@ -62,7 +62,7 @@ class KrajriksApp:
         self.krajkonta_nauda.place(relx=0.2, rely=0.053)
         
         self.basic_button = ttk.Button(self.krajriks_frame, style='TButton', text="Back", command=self.close_krajriks_widgets)
-        self.basic_button.place(relx=0.85, rely=0.05)
+        self.basic_button.place(relx=0.90, rely=0.02)
         
         
         
@@ -89,10 +89,13 @@ class KrajriksApp:
         self.save_button.place(relx=0.5, rely=0.4)
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         
-        self.pazinojumu_button = ttk.Button(self.krajriks_frame, text="Paziņojumi", command=self.paziņojumi)
-        self.pazinojumu_button.place(relx=0.5, rely=0.8)
+        self.pazinojumu_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
+        self.pazinojumu_button.place(relx=0.05, rely=0.10)
         
-    def paziņojumi(self):
+        #mēneša iemaksa
+        self.menesa_iemaksa_button = ttk.Button(self.krajriks_frame, text='')
+        
+    def pazinojumi(self):
         self.pazinojumi = Toplevel(self.root)
         self.pazinojumi.title("pazinojumi")
         self.pazinojumi.grab_set()
@@ -105,7 +108,10 @@ class KrajriksApp:
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
         
+    def menesa_iemaksa(self):
+        global krajkonts, nauda
         
+    
         
     def open_popup(self):
         
