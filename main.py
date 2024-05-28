@@ -21,6 +21,7 @@ class KrajriksApp:
         self.style.configure('Label',background='orange', font=('Arial', 12))
         self.style.configure('Header.TLabel',background='orange', font=('Arial', 15, 'bold'))
         self.style.configure('TFrame', background='orange')
+        self.style.configure('Small.TButton', font=('Arial',10), padding=(2, 2))
         
         self.create_main_widgets()
         self.create_krajriks_widgets()
@@ -89,11 +90,13 @@ class KrajriksApp:
         self.iznemsana_button.place(relx=0.45, rely=0.2)
         
         #mēneša iemaksa
-        self.menesa_iemaksa_label=ttk.Button(self.krajriks_frame, text='dads')
+        self.menesa_iemaksa_button=ttk.Button(self.krajriks_frame, text='Uzstādijumi', command=self.open_uzstadijumi)
+        self.menesa_iemaksa_button.place(relx=0.58, rely=0.2)
         
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         self.merka_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
         self.merka_button.place(relx=0.45, rely=0.10)
+        
         
     #papildināšanai    
     def open_papildinat(self):
@@ -106,13 +109,24 @@ class KrajriksApp:
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
         self.papildinat.geometry(f"400x200+{x}+{y}")   
         
-       
-        
         self.vienrsum = ttk.Entry(self.papildinat)
-        self.vienrsum.place(relx=0.3, rely=0.45)
+        self.vienrsum.place(relx=0.35, rely=0.45)
         
         self.Nosutit=ttk.Button(self.papildinat,text='Nosūtīt', command=self.one_off_payment)
-        self.Nosutit.place(relx=0.4, rely=0.60)
+        self.Nosutit.place(relx=0.35, rely=0.60)
+        
+        self.teksts=ttk.Label(self.papildinat, text='Ievadi summu kādu vēlies papildināt krājkontu', background= 'darkorange')
+        self.teksts.place(relx=0.1, rely=0.3)
+        
+    def open_uzstadijumi(self):
+        self.uzstadijumi = Toplevel(self.root)
+        self.uzstadijumi.title("Uzstādījumi")
+        self.uzstadijumi.grab_set()
+        self.uzstadijumi.configure(background="darkorange")
+        self.uzstadijumi.update_idletasks()
+        x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
+        y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
+        self.uzstadijumi.geometry(f"400x200+{x}+{y}")   
         
     #izņemšanai
     def open_iznemt(self):
@@ -123,12 +137,75 @@ class KrajriksApp:
         self.iznemt.update_idletasks()
         x = self.root.winfo_x() + self.root.winfo_width() // 2 - 100
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
-        self.iznemt.geometry(f"400x200+{x}+{y}")   
+        self.iznemt.geometry(f"500x300+{x}+{y}")  
         
-       
+        self.iznemt_daudzums = StringVar()
+        self.iznemt_error = StringVar()
         
-       
-    
+        iznemt_Label=ttk.Label(self.iznemt, text='Izņemšanas summa:', background='darkorange') 
+        iznemt_Label.place(relx=0.1, rely=0.1)
+        self.iznemt_entry=ttk.Entry(self.iznemt, textvariable=self.iznemt_daudzums)
+        self.iznemt_entry.place(relx=0.1, rely=0.2,relwidth=0.8)
+        
+        self.uzstadit_euro_button(self.iznemt)
+        
+        self.error_label = ttk.Label(self.iznemt, textvariable=self.iznemt_error, background='darkorange', foreground='red')
+        self.error_label.place(relx=0.1, rely=0.7, relwidth=0.8)
+        
+        iznemt_button= ttk.Button(self.iznemt, text="Izņemt", command=self.iznemtt)
+        iznemt_button.place(relx=0.4, rely=0.8)
+        
+    def uzstadit_euro_button(self, parent):
+        button_vertibas=[10, 20, 50, 100, 'Visu']
+        for i, value in enumerate(button_vertibas):
+            if value =='Visu':
+                parent_poga=ttk.Button(parent, text=value, command=self.iznemt_visu, style='Small.TButton', width=6)
+                parent_poga.place(relx=0.1+0.18*i, rely=0.4)
+            else:
+                values_button=ttk.Button(parent, text=f"{value} EUR", command=lambda v=value: self.update_iznemt_summa(v), style='Small.TButton')
+                values_button.place(relx=0.1+ 0.18 * i, rely=0.4)
+                
+    def update_iznemt_summa(self, daudzums):
+        tagadeja_vertiba = self.iznemt_daudzums.get()
+        if tagadeja_vertiba:
+            try:
+                tagadejais_daudzums=float(tagadeja_vertiba)
+            except ValueError:
+                tagadejais_daudzums= 0
+        else:
+            tagadejais_daudzums=0  
+        jaunais_daudzums= tagadejais_daudzums+daudzums
+        self.iznemt_daudzums.set("{:.2f}".format(jaunais_daudzums))          
+        self.parbaudit_iznemsanas_daudzumu()
+        
+    def iznemt_visu(self):
+        self.iznemt_daudzums.set("{:.2f}".format(self.krajkonts))
+        self.parbaudit_iznemsanas_daudzumu()
+        
+    def parbaudit_iznemsanas_daudzumu(self):
+        try:
+            iznemsanas_daudzums=float(self.iznemt_daudzums.get())
+            if iznemsanas_daudzums> self.krajkonts:
+                self.iznemt_error.set("Summa pārsniedz krājkonta bilanci")
+            else:
+                self.iznemt_error.set("")
+        except ValueError:
+            self.iznemt_error.set("Nepareiza ievades forma!")
+            
+    def iznemtt(self):
+         try:
+            iznemsanas_daudzums=float(self.iznemt_daudzums.get())
+            if iznemsanas_daudzums >self.krajkonts:
+                self.iznemt_error.set("Summa pārsniedz krājkonta bilanci")
+            else:
+                self.krajkonts-= iznemsanas_daudzums
+                self.nauda += iznemsanas_daudzums
+                self.naudas_text.set("{:.2f}".format(self.nauda))
+                self.krajkonta_text.set("{:.2f}".format(self.krajkonts))
+                self.iznemt.destroy()
+         except ValueError:
+             self.iznemt_error.set("Nepareiza ievades forma!")
+             
     #mērķa noteikšanai un mērķa sasniegšanas paziņojums    
     def pazinojumi(self):
         self.pazinojumi = Toplevel(self.root)
@@ -140,8 +217,6 @@ class KrajriksApp:
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
         self.pazinojumi.geometry(f"400x200+{x}+{y}")
         
-        
-    
         self.pazinojumi_text= ttk.Label(self.pazinojumi, background='darkorange', text= 'tu esi lohs')
         self.pazinojumi_text.place(relx=0.2, rely=0.2)
         
@@ -175,13 +250,10 @@ class KrajriksApp:
         except:
             pass
      
-       
-             
-        
     def menesa_iemaksa(self):
         global krajkonts, nauda
         if datetime.now().day==5:
-            d
+            mmenesa_sum=menesa_input.get()
             
             
             
@@ -258,12 +330,10 @@ class KrajriksApp:
 
     
     def one_off_payment(self):
-        
         user_input_one_off = self.vienrsum.get()
         if user_input_one_off:
             try:
                 one_off = float(user_input_one_off)
-                self.papildinat.destroy()
                 if self.nauda < one_off:
                     messagebox.showerror("Error", "Nav tik daudz naudas.")
                 else:
@@ -271,6 +341,7 @@ class KrajriksApp:
                     self.nauda -= one_off
                     self.naudas_text.set("{:.2f}".format(self.nauda))
                     self.krajkonta_text.set("{:.2f}".format(self.krajkonts))
+                self.papildinat.destroy()
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
@@ -278,7 +349,7 @@ class KrajriksApp:
     def galvenais_cikls(self):
         self.update_bilance()
         self.krajkonta_bilance()
-        self.one_off_payment()
+        
         self.merka_noteiksana()
 
 if __name__ == "__main__":
