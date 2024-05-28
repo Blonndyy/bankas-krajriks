@@ -104,7 +104,7 @@ class KrajriksApp:
         self.merka_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
         self.merka_button.place(relx=0.45, rely=0.10)
      #--------------Paziņojums---------------------------------------------------
-     def pazinojums(self):
+    def pazinojums(self):
          dsd
             
         
