@@ -70,7 +70,7 @@ class KrajriksApp:
         self.krajkonta_nauda = ttk.Label(self.krajriks_frame, textvariable=self.krajkonta_text, style='Header.TLabel')
         self.krajkonta_nauda.place(relx=0.55, rely=0.053)
         
-        self.basic_button = ttk.Button(self.krajriks_frame, style='TButton', text="Back", command=self.close_krajriks_widgets)
+        self.basic_button = ttk.Button(self.krajriks_frame, style='TButton', text="Atpakaļ", command=self.close_krajriks_widgets)
         self.basic_button.place(relx=0.85, rely=0.02)
         
         self.test_label = ttk.Label(self.krajriks_frame, text='Testēšana priekš krājkonta')
@@ -103,7 +103,9 @@ class KrajriksApp:
         #Paziņojums, kas parādas pēc krājkonta bilances sasniegšanai noteiktai summai.
         self.merka_button = ttk.Button(self.krajriks_frame, text="Nosaki mērķi", command=self.pazinojumi)
         self.merka_button.place(relx=0.45, rely=0.10)
-        
+     #--------------Paziņojums---------------------------------------------------
+     def pazinojums(self):
+            
         
     #----------papildināšanai-----------------------------------------------------------------------    
     def open_papildinat(self):
@@ -135,10 +137,7 @@ class KrajriksApp:
         y = self.root.winfo_y() + self.root.winfo_height() // 2 - 50
         self.uzstadijumi.geometry(f"400x300+{x}+{y}") 
         
-        self.menesa_iemaksa_ieslegt=BooleanVar(value=False)
-        self.noapalosana_ieslegt=BooleanVar(value=False)
-        self.menesa_iemaksa_daudzums= StringVar(value='0.00') 
-        self.naudas_iemaksas_diena=IntVar(value=1)
+       
         
         ieslegt_menesa_iemaksu_button=ttk.Checkbutton(self.uzstadijumi, text='Ieslēgt mēneša iemaksu', variable=self.menesa_iemaksa_ieslegt, style='Custom.TCheckbutton')
         ieslegt_menesa_iemaksu_button.place(relx=0.1, rely=0.1)
@@ -333,24 +332,27 @@ class KrajriksApp:
     
     def close_krajriks_widgets(self):
         self.krajriks_frame.place_forget()
-    
+        
+   #------------Viss ar bilancēm un noapaļošanas funkcījām---------------------------------------------------     
     def update_bilance(self):
-        user_input = self.prod_sum.get()
-        if user_input:
-            try:
-                amount = float(user_input)
-                if amount > self.nauda:
-                    messagebox.showerror("Error", "Nav tik daudz naudas")
-                else:
-                    self.nauda -= amount
-                    self.naudas_text.set("{:.2f}".format(self.nauda))
-            except ValueError as e:
-                messagebox.showerror("Error", str(e))
+        if self.noapalosana_ieslegt.get(): 
+            user_input = self.prod_sum.get()
+            if user_input:
+                try:
+                    amount = float(user_input)
+                    if amount > self.nauda:
+                        messagebox.showerror("Error", "Nav tik daudz naudas")
+                    else:
+                        self.nauda -= amount
+                        self.naudas_text.set("{:.2f}".format(self.nauda))
+                except ValueError as e:
+                    messagebox.showerror("Error", str(e))
 
- #------------Viss ar bilancēm un noapaļošanas funkcījām---------------------------------------------------   
-    def krajkonta_bilance(self):
-        user_input = self.prod_sum.get()
+
+    def krajkonta_bilance(self): 
         if self.noapalosana_ieslegt.get():
+            user_input = self.prod_sum.get()
+        
             if user_input:   
                 try:
                     change = get_change(user_input)
@@ -364,25 +366,28 @@ class KrajriksApp:
                         self.krajkonta_text.set("{:.2f}".format(self.krajkonts))
                 except ValueError as e:
                     messagebox.showerror("Error", str(e))
-
-    
+        
+ #-----------vienreizējā iemaksa-------------------------------   
     def one_off_payment(self):
-        user_input_one_off = self.vienrsum.get()
-        if user_input_one_off:
-            try:
-                one_off = float(user_input_one_off)
-                if self.nauda < one_off:
-                    messagebox.showerror("Error", "Nav tik daudz naudas.")
-                else:
-                    self.krajkonts += one_off
-                    self.nauda -= one_off
-                    self.naudas_text.set("{:.2f}".format(self.nauda))
-                    self.krajkonta_text.set("{:.2f}".format(self.krajkonts))
-                self.papildinat.destroy()
-            except ValueError as e:
-                messagebox.showerror("Error", str(e))
+        
+            user_input_one_off = self.vienrsum.get()
+        
+            if user_input_one_off:
+                try:
+                    one_off = float(user_input_one_off)
+                    if self.nauda < one_off:
+                         messagebox.showerror("Error", "Nav tik daudz naudas.")
+                    else:
+                        self.krajkonts += one_off
+                        self.nauda -= one_off
+                        self.naudas_text.set("{:.2f}".format(self.nauda))
+                        self.krajkonta_text.set("{:.2f}".format(self.krajkonts))
+                    self.papildinat.destroy()
+                except ValueError as e:
+                        messagebox.showerror("Error", str(e))
+        
 
-#------------------svarīgu ciklu palaišana--------------------------------------------------
+
     def galvenais_cikls(self):
         self.update_bilance()
         self.krajkonta_bilance()
