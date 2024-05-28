@@ -105,6 +105,7 @@ class KrajriksApp:
         self.merka_button.place(relx=0.45, rely=0.10)
      #--------------Paziņojums---------------------------------------------------
      def pazinojums(self):
+         dsd
             
         
     #----------papildināšanai-----------------------------------------------------------------------    
